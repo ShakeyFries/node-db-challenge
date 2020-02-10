@@ -1,28 +1,41 @@
 const express = require('express');
-const Task = require('../models/taskModels');
+
+const Tasks = require('../models/taskModels');
 
 const router = express.Router();
 
+//include endpoints for adding tasks and for retrieving them.
+//lists of tasks MUST include the project name and project descriptions
 
-
-router.get('/', async ( req,res ) => {
-  try {
-   const task = await Task.getProject();
-    res.status(200).json(task);
-  } catch(err) {
-    res.status(500).json({ message: "Could not get projects!"});
-  }
+router.get('/', async (req, res) => {
+    try {
+        const tas = await Tasks.getTask();
+        res.status(200).json(tas);
+    } catch (err) {
+        res.status(500).json({ message: 'Could not retrieve tasks.', err});
+    };
 });
 
-router.post('/', async ( req,res ) => {
-  const body = req.body;
+router.get('/:id', async (req, res) => {
+    const task_id = req.params.id;
 
-  try {
-    const task = await Task.addProject(body);
-    res.status(200).json(task);
-  } catch(err) {
-    res.status(500).json({ message: "could not add to projects!"});
-  }
+    try {
+        const tas = await Tasks.getTaskById(task_id);
+        res.status(200).json(tas);
+    } catch (err) {
+        res.status(500).json({ message: 'Could not retrieve task.', err});
+    };
+});
+
+router.post('/', async (req, res) => {
+    const data = req.body;
+
+    try {
+        const tas = await Tasks.addTask(data);
+        res.status(200).json(tas);
+    } catch (err) {
+        res.status(500).json({ message: 'Could not add task.', err});
+    };
 });
 
 module.exports = router;

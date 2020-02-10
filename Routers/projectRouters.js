@@ -5,24 +5,24 @@ const router = express.Router();
 
 
 
-router.get('/', async ( req,res ) => {
+router.get('/', async (req, res) => {
   try {
-   const project = await Project.getProject();
-    res.status(200).json(project);
-  } catch(err) {
-    res.status(500).json({ message: "Could not get projects!"});
-  }
+      const proj = await Projects.getProjects();
+      res.status(200).json(proj);
+  } catch (err) {
+      res.status(500).json({ message: 'Could not retrieve projects.', err});
+  };
 });
 
-router.post('/', async ( req,res ) => {
+router.post('/', async (req, res) => {
   const body = req.body;
 
   try {
-    const project = await Project.addProject(body);
-    res.status(200).json(project);
-  } catch(err) {
-    res.status(500).json({ message: "could not add to projects!"});
-  }
+      const proj = await Projects.addProjects(body);
+      res.status(200).json(proj);
+  } catch (err) {
+      res.status(500).json({ message: 'Could not add project.', err});
+  };
 });
 
 module.exports = router;
