@@ -6,9 +6,9 @@ module.exports = {
 };
 
 function getProject() {
-      return db('project');
+      return db('projects');
 };
 
 function addProject(body) {
-      return db('project').insert(body);
+      return db('projects').insert(body);
 };
