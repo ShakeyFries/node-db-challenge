@@ -1,14 +1,19 @@
 const db = require('../data/db-config');
 
 module.exports = {
-      getResource,
-      addResource
+      getResources,
+      getResourcesById,
+      addResources
 };
 
-function getResource() {
+function getResources() {
       return db('resource');
 };
 
-function addResource(body) {
+function getResourcesById(resource_id) {
+      return db('resource').where({ resource_id: resource_id });
+  };
+
+function addResources(body) {
       return db('resource').insert(body);
 };

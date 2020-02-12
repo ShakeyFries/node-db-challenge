@@ -14,6 +14,17 @@ router.get('/', async (req, res) => {
   };
 });
 
+router.get('/:id', async (req, res) => {
+  const project_id = req.params.id;
+  
+  try {
+      const proj = await Projects.getProjectsById(project_id);
+      res.status(200).json(proj);
+  } catch (err) {
+      res.status(500).json({ message: 'Could not retrieve project.', err});
+  };
+});
+
 router.post('/', async (req, res) => {
   const body = req.body;
 
